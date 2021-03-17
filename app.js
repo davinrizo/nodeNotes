@@ -2,7 +2,7 @@ const fs = require('fs');
 const yargs = require('yargs');
 const validator = require('validator');
 
-const getNotes = require('./notes.js')
+const notes = require('./notes.js')
 
 yargs.command({
     command: 'add',
@@ -20,8 +20,22 @@ yargs.command({
         }
     },
     handler: (argv) => {
-        console.log('Title: ' + argv.title);
-        console.log('body: ' + argv.body)
+        notes.addNotes(argv.title, argv.body)
+    }
+})
+
+yargs.command({
+    command: 'remove',
+    describe: 'remove a note',
+    builder: {
+        title: {
+            describe: "Note title",
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler: (argv) => {
+        notes.removeNotes(argv.title)
     }
 })
 
